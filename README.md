@@ -33,10 +33,3 @@ Jocul se termină atunci când:
 - `.gitignore` – ignoră fișierele obiect și executabile  
 
 ---
-
-## ⚙️ Compilare manuală
-
-Deschide Command Prompt în folderul proiectului și rulează:
-
-```cmd
-g++ board.cpp game_engine.cpp painter.cpp main.cpp -o Tic-Tac-Toe.exe
