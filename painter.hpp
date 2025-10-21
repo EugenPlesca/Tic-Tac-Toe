@@ -3,6 +3,7 @@
 
 class Painter {
 public:
-    void DrawBoard(const Board& board);
-    void ShowWinner(Player winner);
+    virtual void DrawBoard(const Board& board) = 0;
+    virtual void ShowWinner(Player winner) = 0;
+    virtual ~Painter() = default;
 };
