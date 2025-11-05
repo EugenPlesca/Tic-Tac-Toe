@@ -1,32 +1,18 @@
 #include "board.hpp"
 
-Board::Board() {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            _grid[i][j] = Player::None;
-}
+Board::Board() : _grid(3, std::vector<Player>(3, Player::None)) {}
 
-Board::Board(const Board& other) {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            _grid[i][j] = other._grid[i][j];
-}
+Board::Board(const Board& other) : _grid(other._grid) {}
 
 Board& Board::operator=(const Board& other) {
     if (this != &other) {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
-                _grid[i][j] = other._grid[i][j];
+        _grid = other._grid;
     }
     return *this;
 }
 
 bool Board::operator==(const Board& other) const {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            if (_grid[i][j] != other._grid[i][j])
-                return false;
-    return true;
+    return _grid == other._grid;
 }
 
 bool Board::operator!=(const Board& other) const {
@@ -34,8 +20,8 @@ bool Board::operator!=(const Board& other) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const Board& b) {
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
             char symbol = ' ';
             if (b._grid[i][j] == Player::X) symbol = 'X';
             else if (b._grid[i][j] == Player::O) symbol = 'O';
@@ -49,8 +35,8 @@ std::ostream& operator<<(std::ostream& os, const Board& b) {
 }
 
 std::istream& operator>>(std::istream& is, Board& b) {
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
             char c;
             std::cout << "Cell [" << i << "][" << j << "] (X/O/_): ";
             is >> c;
@@ -78,9 +64,9 @@ Player Board::GetCell(const Point& pos) const {
 }
 
 bool Board::IsFull() const {
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            if (_grid[i][j] == Player::None)
-                return false;
-    return true;
+    return std::all_of(_grid.begin(), _grid.end(), [](const auto& row) {
+        return std::all_of(row.begin(), row.end(), [](Player p) {
+            return p != Player::None;
+        });
+    });
 }
