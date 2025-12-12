@@ -9,4 +9,7 @@ g++ -c src\main.cpp -Ilibs\core -o main.o
 
 g++ main.o game_engine.o painter.o libcore.a -o Tic-Tac-Toe.exe
 
+g++ tests\test_board.cpp libcore.a -Ilibs\core -o test_board.exe
+test_board.exe
+
 pause
