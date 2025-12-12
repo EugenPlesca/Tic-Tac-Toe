@@ -1,4 +1,6 @@
 #include "game_engine.hpp"
+#include "board.hpp"
+#include "player.hpp"
 #include "point.hpp"
 #include <iostream>
 #include <fstream>
@@ -24,19 +26,21 @@ void GameEngine::Run() {
         if (_painter) _painter->DrawBoard(*_board);
 
         int x, y;
-        std::cout << "Player " << (_currentPlayer==Player::X?"X":"O") << ", enter coordinates (x y): ";
+        std::cout << "Player " << (_currentPlayer == Player::X ? "X" : "O")
+                  << ", enter coordinates (x y): ";
         std::cin >> x >> y;
 
-        Point pos{x,y};
-        if (!_board->PlaceMove(pos,_currentPlayer)) continue;
+        Point pos{x, y};
+        if (!_board->PlaceMove(pos, _currentPlayer)) continue;
 
-        log << "Player " << (_currentPlayer==Player::X?"X":"O") << " -> (" << x << "," << y << ")\n";
+        log << "Player " << (_currentPlayer == Player::X ? "X" : "O")
+            << " -> (" << x << "," << y << ")\n";
 
         Player winner = CheckWinner();
         if (winner != Player::None) {
             if (_painter) _painter->DrawBoard(*_board);
             if (_painter) _painter->ShowWinner(winner);
-            log << "Winner: Player " << (winner==Player::X?"X":"O") << "\n\n";
+            log << "Winner: Player " << (winner == Player::X ? "X" : "O") << "\n\n";
             break;
         }
 
@@ -47,33 +51,42 @@ void GameEngine::Run() {
             break;
         }
 
-        _currentPlayer = (_currentPlayer==Player::X?Player::O:Player::X);
+        _currentPlayer = (_currentPlayer == Player::X ? Player::O : Player::X);
     }
 
     log.close();
 }
 
 Player GameEngine::CheckWinner() const {
-    int lines[3] = {0,1,2};
-    for (int i = 0; i < 3; ++i) {
-        if (_board->GetCell({i,0}) != Player::None &&
-            std::all_of(std::begin(lines), std::end(lines), [&](int j){ return _board->GetCell({i,j}) == _board->GetCell({i,0}); }))
-            return _board->GetCell({i,0});
+    int lines[3] = {0, 1, 2};
 
-        if (_board->GetCell({0,i}) != Player::None &&
-            std::all_of(std::begin(lines), std::end(lines), [&](int j){ return _board->GetCell({j,i}) == _board->GetCell({0,i}); }))
-            return _board->GetCell({0,i});
+    for (int i = 0; i < 3; ++i) {
+        if (_board->GetCell({i, 0}) != Player::None &&
+            std::all_of(std::begin(lines), std::end(lines),
+                        [&](int j) {
+                            return _board->GetCell({i, j}) ==
+                                   _board->GetCell({i, 0});
+                        }))
+            return _board->GetCell({i, 0});
+
+        if (_board->GetCell({0, i}) != Player::None &&
+            std::all_of(std::begin(lines), std::end(lines),
+                        [&](int j) {
+                            return _board->GetCell({j, i}) ==
+                                   _board->GetCell({0, i});
+                        }))
+            return _board->GetCell({0, i});
     }
 
-    if (_board->GetCell({0,0}) != Player::None &&
-        _board->GetCell({0,0}) == _board->GetCell({1,1}) &&
-        _board->GetCell({1,1}) == _board->GetCell({2,2}))
-        return _board->GetCell({0,0});
+    if (_board->GetCell({0, 0}) != Player::None &&
+        _board->GetCell({0, 0}) == _board->GetCell({1, 1}) &&
+        _board->GetCell({1, 1}) == _board->GetCell({2, 2}))
+        return _board->GetCell({0, 0});
 
-    if (_board->GetCell({0,2}) != Player::None &&
-        _board->GetCell({0,2}) == _board->GetCell({1,1}) &&
-        _board->GetCell({1,1}) == _board->GetCell({2,0}))
-        return _board->GetCell({0,2});
+    if (_board->GetCell({0, 2}) != Player::None &&
+        _board->GetCell({0, 2}) == _board->GetCell({1, 1}) &&
+        _board->GetCell({1, 1}) == _board->GetCell({2, 0}))
+        return _board->GetCell({0, 2});
 
     return Player::None;
 }

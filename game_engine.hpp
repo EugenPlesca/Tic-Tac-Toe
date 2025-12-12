@@ -1,8 +1,10 @@
 #pragma once
-#include "board.hpp"
-#include "player.hpp"
-#include "painter.hpp"
+
 #include <memory>
+#include "painter.hpp"
+
+class Board;
+enum class Player;
 
 class GameEngine {
     std::shared_ptr<Board> _board;
