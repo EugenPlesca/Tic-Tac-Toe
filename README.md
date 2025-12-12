@@ -1,53 +1,38 @@
-🎮 Tic-Tac-Toe – Laborator 4
+🎮 Tic-Tac-Toe – Laborator 6
 
-Tic-Tac-Toe realizat în cadrul Laboratorului 4 pentru C++.
-Joc clasic pentru doi jucători, X și O, cu afișare în consolă, rescris pentru a folosi STL, smart pointers și fluxuri de intrare/ieșire.
+Tic-Tac-Toe realizat în cadrul Laboratorului 6 pentru C++.
+Lucrarea se bazează pe laboratoarele anterioare și adaugă documentație, teste unitare și actualizarea procesului de construire.
 
-1. Denumirea proiectului
+1. Descrierea proiectului
 
-Tic Tac Toe (X și O)
+Aplicația este o implementare a jocului clasic Tic-Tac-Toe (X și O), realizată în C++ modern. Proiectul este structurat modular și utilizează biblioteci statice, documentație automată și teste pentru clasele de date.
 
-2. Ce reprezintă proiectul
+2. Regulile jocului
 
-Proiectul este o implementare simplă a jocului clasic Tic Tac Toe (X și O), pe o tablă 3x3, cu cod modernizat pentru C++ (STL, smart pointers, fluxuri).
+Jocul se desfășoară pe o tablă 3x3.
+Doi jucători (X și O) mută pe rând.
+Jocul se termină atunci când un jucător aliniază 3 simboluri sau când tabla este completă (remiză).
 
-3. Modificări față de laboratorul anterior
+3. Dependențe
 
-Înlocuirea vectorilor cu containere STL (std::array sau std::vector)
+Sistem de operare: Windows
 
-Înlocuirea pointerilor bruti cu std::shared_ptr
+Compilator: g++ (MinGW / GCC)
 
-Folosirea fluxurilor de intrare/ieșire (std::cin, std::cout, std::ofstream)
+Standard C++: C++17
 
-Înlocuirea șirurilor de caractere cu std::string
+Biblioteci utilizate:
 
-Utilizarea algoritmilor STL (std::all_of) pentru verificarea câștigătorului
+STL (vector, algorithm, memory, fstream)
 
-4. Regulile jocului
+Bibliotecă statică proprie libcore.a
 
-Jocul se joacă pe o tablă 3x3.
-Doi jucători participă: unul joacă cu X, celălalt cu O.
-Jucătorii fac mutări pe rând, plasând X sau O într-o celulă liberă.
-Jocul se termină atunci când:
+4. Construirea aplicației
 
-unul dintre jucători are 3 simboluri consecutive pe o linie, coloană sau diagonală → câștigă;
+Aplicația se compilează folosind scriptul build.cmd.
+Scriptul construiește biblioteca statică, aplicația principală și rulează testele unitare.
 
-toate celulele sunt ocupate și nu există câștigător → remiză.
+5. Testare
 
-🧱 Structura proiectului
-
-board.hpp / board.cpp – gestionarea tablei de joc
-
-game_engine.hpp / game_engine.cpp – logica jocului și rularea partidei
-
-painter.hpp / painter.cpp – afișarea tablei și câștigătorului
-
-player.hpp – definirea jucătorilor (X, O, None)
-
-point.hpp – structura pentru coordonate
-
-main.cpp – punctul de intrare în joc
-
-build.cmd – script pentru compilare rapidă
-
-.gitignore – ignoră fișierele obiect și executabile
+Directorul tests conține teste pentru clasele ce reprezintă datele.
+Testele verifică validitatea mutărilor și starea tablei de joc.
